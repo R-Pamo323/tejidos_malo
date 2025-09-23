@@ -7,8 +7,8 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     on<CounterIncrementPreseed>((event, emit) {
       emit(CounterState(state.count + 1));
     });
-    on<CounterIncrementPreseed>((event, emit) {
-      emit(CounterState(state.count + 1));
+    on<CounterDecrementPressed>((event, emit) {
+      emit(CounterState(state.count - 1));
     });
   }
 }

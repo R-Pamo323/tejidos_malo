@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:tejidosmalo/app/theme/my_colors.dart';
+import 'package:tejidosmalo/app/theme/my_styles.dart';
+
+class ButtonWidget extends StatelessWidget {
+  final String? text;
+  final double? width;
+  final double? height;
+  final bool? isFill;
+  final bool? isBlocked;
+  final bool? isBorder;
+  final void Function() onTap;
+
+  const ButtonWidget({
+    super.key,
+    this.text,
+    this.width,
+    this.height = 60,
+    required this.onTap,
+    this.isFill,
+    this.isBlocked,
+    this.isBorder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (isBlocked ?? false) ? () {} : onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        height: height,
+        width:
+            (isFill ?? false)
+                ? MediaQuery.of(context).size.width * 0.85
+                : width,
+        decoration: BoxDecoration(
+          border:
+              (isBlocked ?? false)
+                  ? Border.all(width: 1, color: MyColors.instance.gray4B4A4E)
+                  : Border.all(width: 1, color: MyColors.instance.yellowCF9201),
+          color:
+              (isBlocked ?? false)
+                  ? MyColors.instance.gray4B4A4E
+                  : MyColors.instance.yellowCF9201,
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Center(
+          child: Text(
+            text ?? '',
+            style:
+                (isBlocked ?? false)
+                    ? MyStyles.instance.gray16W500OpenSans
+                    : MyStyles.instance.white16W500Outfit,
+          ),
+        ),
+      ),
+    );
+  }
+}

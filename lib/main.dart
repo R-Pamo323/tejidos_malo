@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tejidosmalo/logic/counter/counter_bloc.dart';
+import 'package:tejidosmalo/logic/navigation/navigation_bloc.dart';
+import 'package:tejidosmalo/logic/route/route_bloc.dart';
 import 'package:tejidosmalo/presentation/splash/splash_screen.dart';
 
 void main() {
@@ -18,8 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: BlocProvider(
-        create: (context) => CounterBloc(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => CounterBloc()),
+          BlocProvider(create: (context) => RouteBloc()),
+          BlocProvider(create: (context) => NavigationBloc()),
+        ],
+
         child: SplashScreen(),
       ),
     );

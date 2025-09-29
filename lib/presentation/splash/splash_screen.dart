@@ -1,61 +1,32 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tejidosmalo/app/theme/my_colors.dart';
-import 'package:tejidosmalo/app/theme/my_images.dart';
-import 'package:tejidosmalo/app/theme/my_styles.dart';
+import 'package:tejidosmalo/core/exports.dart';
 import 'package:tejidosmalo/core/widgets/button_widget.dart';
 import 'package:tejidosmalo/logic/route/route_bloc.dart';
 import 'package:tejidosmalo/logic/route/route_event.dart';
 import 'package:tejidosmalo/logic/route/route_state.dart';
-import 'package:tejidosmalo/presentation/main/main_screen.dart';
-
-/*class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final counterBloc = context.read<CounterBloc>();
-
-    return Scaffold(
-      appBar: AppBar(title: const Text("Contador")),
-      body: Center(
-        child: BlocBuilder<CounterBloc, CounterState>(
-          builder: (context, state) {
-            return Column(
-              children: [
-                Text("El contador es: ${state.count}"),
-                TextButton(
-                  onPressed: () {
-                    counterBloc.add(CounterIncrementPreseed());
-                  },
-                  child: Text("Subir"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    counterBloc.add(CounterDecrementPressed());
-                  },
-                  child: Text("Bajar"),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-}*/
+import 'package:tejidosmalo/presentation/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //context.read<RouteBloc>().add(SplashStarted());
+
     return BlocListener<RouteBloc, RouteState>(
       listener: (context, state) {
-        if (state is MainState) {
-          Navigator.push(
+        if (state is OnboardingState) {
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const MainScreen()),
+            MaterialPageRoute(
+              builder:
+                  (_) => BlocProvider.value(
+                    value: context.read<RouteBloc>(),
+                    child: const OnboardingScreen(),
+                  ),
+            ),
           );
         }
       },
@@ -66,52 +37,25 @@ class SplashScreen extends StatelessWidget {
             color: MyColors.instance.background,
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 100),
-                Transform.translate(
-                  offset: const Offset(-30, 0),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.none,
-                    children: [
-                      Image.asset(MyImages.splash1, width: 100),
-                      Positioned(
-                        right: -60,
-                        bottom: -60,
-                        child: Image.asset(
-                          MyImages.splash2,
-                          width: 85,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ],
+                FadeInUp(
+                  from: 150,
+                  duration: const Duration(milliseconds: 1200),
+                  child: Image.asset(MyImages.logo),
+                ),
+                FadeInUp(
+                  from: 40,
+                  child: ButtonWidget(
+                    onTap: () {
+                      context.read<RouteBloc>().add(GoToOnboarding());
+                    },
+                    text: "Get Started",
+                    isFill: false,
+                    isBlocked: false,
+                    width: 200,
                   ),
                 ),
-
-                Spacer(),
-                Text(
-                  "Crafting Joy, One Stitch at a Time",
-                  style: MyStyles.instance.yellow36W700Outfit,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 50),
-                Text(
-                  "Discover exquisite handmade crochet creations, connect with artisans, and bring cozy charm into your life with CozyStitch Marketplace.",
-                  style: MyStyles.instance.gray16W500OpenSans,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 40),
-                ButtonWidget(
-                  onTap: () {
-                    context.read<RouteBloc>().add(GoToMain());
-                  },
-                  text: "Get Started",
-                  isFill: false,
-                  isBlocked: false,
-                  width: 200,
-                ),
-                const SizedBox(height: 80),
               ],
             ),
           ),

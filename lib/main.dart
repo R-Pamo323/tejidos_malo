@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tejidosmalo/logic/counter/counter_bloc.dart';
+import 'package:tejidosmalo/app/app_router.dart';
+
 import 'package:tejidosmalo/logic/navigation/navigation_bloc.dart';
 import 'package:tejidosmalo/logic/route/route_bloc.dart';
-import 'package:tejidosmalo/presentation/splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter _appRouter = AppRouter();
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => CounterBloc()),
-          BlocProvider(create: (context) => RouteBloc()),
-          BlocProvider(create: (context) => NavigationBloc()),
-        ],
-
-        child: SplashScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => RouteBloc()),
+        BlocProvider(create: (context) => NavigationBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        onGenerateRoute: _appRouter.onGenerateRoute,
+        initialRoute: '/splash',
       ),
     );
   }

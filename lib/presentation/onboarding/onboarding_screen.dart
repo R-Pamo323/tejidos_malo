@@ -7,7 +7,6 @@ import 'package:tejidosmalo/core/widgets/button_widget.dart';
 import 'package:tejidosmalo/logic/route/route_bloc.dart';
 import 'package:tejidosmalo/logic/route/route_event.dart';
 import 'package:tejidosmalo/logic/route/route_state.dart';
-import 'package:tejidosmalo/presentation/main/main_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -17,10 +16,7 @@ class OnboardingScreen extends StatelessWidget {
     return BlocListener<RouteBloc, RouteState>(
       listener: (context, state) {
         if (state is MainState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
-          );
+          Navigator.of(context).pushReplacementNamed('/');
         }
       },
       child: SafeArea(

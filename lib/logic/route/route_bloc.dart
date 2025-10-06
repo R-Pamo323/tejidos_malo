@@ -7,6 +7,7 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
     on<GoToMain>((event, emit) => emit(MainState()));
     on<GoToOnboarding>((event, emit) => emit(OnboardingState()));
     on<SplashStarted>(_onSplashStarted);
+    on<GoToDetailProduct>((event, emit) => emit(DetailProductState()));
     //on<GoToDetailEvent>((event, emit) => emit(DetailState(event.itemId)));
   }
 

@@ -9,6 +9,7 @@ class ButtonWidget extends StatelessWidget {
   final bool? isFill;
   final bool? isBlocked;
   final bool? isBorder;
+  final IconData? icon;
   final void Function() onTap;
 
   const ButtonWidget({
@@ -20,6 +21,7 @@ class ButtonWidget extends StatelessWidget {
     this.isFill,
     this.isBlocked,
     this.isBorder,
+    this.icon,
   });
 
   @override
@@ -42,16 +44,33 @@ class ButtonWidget extends StatelessWidget {
               (isBlocked ?? false)
                   ? MyColors.instance.gray4B4A4E
                   : MyColors.instance.yellowCF9201,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius:
+              (icon != null)
+                  ? BorderRadius.circular(8)
+                  : BorderRadius.circular(50),
         ),
         child: Center(
-          child: Text(
-            text ?? '',
-            style:
-                (isBlocked ?? false)
-                    ? MyStyles.instance.gray16W500OpenSans
-                    : MyStyles.instance.white16W500Outfit,
-          ),
+          child:
+              (icon != null)
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(icon, size: 18, color: MyColors.instance.white),
+                      const SizedBox(width: 8),
+                      Text(
+                        text ?? '',
+                        style: MyStyles.instance.white14W700OpenSans,
+                      ),
+                    ],
+                  )
+                  : Text(
+                    text ?? '',
+                    style:
+                        (isBlocked ?? false)
+                            ? MyStyles.instance.gray16W500OpenSans
+                            : MyStyles.instance.white16W500Outfit,
+                  ),
         ),
       ),
     );

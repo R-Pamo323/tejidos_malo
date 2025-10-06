@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tejidosmalo/core/exports.dart';
 import 'package:tejidosmalo/logic/navigation/navigation_bloc.dart';
 import 'package:tejidosmalo/logic/navigation/navigation_event.dart';
 import 'package:tejidosmalo/logic/navigation/navigation_state.dart';
@@ -21,12 +22,29 @@ class MainScreen extends StatelessWidget {
       NotificationsScreen(),
       MoreScreen(),
     ];
+
+    final List<String> titles = [
+      "Mercado de Punta Acogedora",
+      "Galería de Inspiración",
+      "Mi Perfil",
+      "Notificaciones",
+      "Sobre nosotros & Contáctanos",
+    ];
+
     return BlocProvider(
       create: (_) => NavigationBloc(),
       child: BlocBuilder<NavigationBloc, NavigationState>(
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(title: Text("Home con 5 tabs")),
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                titles[state.index],
+                textAlign: TextAlign.center,
+                style: MyStyles.instance.yellow18W700Outfit,
+              ),
+              backgroundColor: MyColors.instance.bgBottomNavigationBar,
+            ),
             body: pages[state.index],
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: state.index,
@@ -34,20 +52,25 @@ class MainScreen extends StatelessWidget {
                 context.read<NavigationBloc>().add(ChangeTabEvent(i));
               },
               type: BottomNavigationBarType.fixed,
+              selectedItemColor: MyColors.instance.yellowCF9201,
+              backgroundColor: MyColors.instance.bgBottomNavigationBar,
               items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Tab 1"),
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: "Tab 2",
-                ),
-                BottomNavigationBarItem(icon: Icon(Icons.add), label: "Tab 3"),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications),
-                  label: "Tab 4",
+                  icon: Icon(Icons.image_sharp),
+                  label: "Gallery",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
-                  label: "Tab 5",
+                  label: "Profile",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.notifications),
+                  label: "Updates",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.more_horiz),
+                  label: "More",
                 ),
               ],
             ),

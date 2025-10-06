@@ -29,7 +29,7 @@ class SplashScreen extends StatelessWidget {
               children: [
                 FadeInUp(
                   from: 150,
-                  duration: const Duration(milliseconds: 1200),
+                  duration: const Duration(milliseconds: 1500),
                   child: Image.asset(MyImages.logo),
                 ),
               ],

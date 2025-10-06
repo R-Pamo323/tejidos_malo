@@ -16,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
     return BlocListener<RouteBloc, RouteState>(
       listener: (context, state) {
         if (state is MainState) {
-          Navigator.of(context).pushReplacementNamed('/');
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
         }
       },
       child: SafeArea(

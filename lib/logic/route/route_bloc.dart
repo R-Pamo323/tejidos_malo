@@ -14,7 +14,7 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
     SplashStarted event,
     Emitter<RouteState> emit,
   ) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
     emit(OnboardingState());
   }
 }

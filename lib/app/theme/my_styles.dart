@@ -22,6 +22,13 @@ class MyStyles {
     fontWeight: FontWeight.w700,
   );
 
+  final TextStyle yellow24W700Outfit = TextStyle(
+    color: MyColors.instance.yellowCF9201,
+    fontSize: 24.0,
+    fontFamily: "Outfit",
+    fontWeight: FontWeight.w700,
+  );
+
   final TextStyle yellow36W700Outfit = TextStyle(
     color: MyColors.instance.yellowCF9201,
     fontSize: 36.0,
@@ -30,6 +37,13 @@ class MyStyles {
   );
 
   //Gray
+  final TextStyle gray14W400OpenSans = TextStyle(
+    color: MyColors.instance.gray727272,
+    fontSize: 14.0,
+    fontFamily: "OpenSans",
+    fontWeight: FontWeight.w400,
+  );
+
   final TextStyle gray16W500OpenSans = TextStyle(
     color: MyColors.instance.gray4B4A4E,
     fontSize: 16.0,
@@ -85,6 +99,27 @@ class MyStyles {
     color: MyColors.instance.black,
     fontSize: 14.0,
     fontFamily: "OpenSans",
+    fontWeight: FontWeight.w500,
+  );
+
+  final TextStyle black18W500OpenSans = TextStyle(
+    color: MyColors.instance.black,
+    fontSize: 18.0,
+    fontFamily: "OpenSans",
+    fontWeight: FontWeight.w500,
+  );
+
+  final TextStyle black18W500Outfit = TextStyle(
+    color: MyColors.instance.black,
+    fontSize: 18.0,
+    fontFamily: "Outfit",
+    fontWeight: FontWeight.w500,
+  );
+
+  final TextStyle black20W500Outfit = TextStyle(
+    color: MyColors.instance.black,
+    fontSize: 20.0,
+    fontFamily: "Outfit",
     fontWeight: FontWeight.w500,
   );
 }

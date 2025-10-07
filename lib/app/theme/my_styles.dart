@@ -102,6 +102,20 @@ class MyStyles {
     fontWeight: FontWeight.w500,
   );
 
+  final TextStyle black17171714W500OpenSans = TextStyle(
+    color: MyColors.instance.black171717,
+    fontSize: 14.0,
+    fontFamily: "OpenSans",
+    fontWeight: FontWeight.w500,
+  );
+
+  final TextStyle black17171714W700OpenSans = TextStyle(
+    color: MyColors.instance.black171717,
+    fontSize: 14.0,
+    fontFamily: "OpenSans",
+    fontWeight: FontWeight.w700,
+  );
+
   final TextStyle black18W500OpenSans = TextStyle(
     color: MyColors.instance.black,
     fontSize: 18.0,

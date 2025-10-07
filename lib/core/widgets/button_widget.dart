@@ -9,6 +9,7 @@ class ButtonWidget extends StatelessWidget {
   final bool? isFill;
   final bool? isBlocked;
   final bool? isBorder;
+  final double? borderRadius;
   final IconData? icon;
   final void Function() onTap;
 
@@ -22,6 +23,7 @@ class ButtonWidget extends StatelessWidget {
     this.isBlocked,
     this.isBorder,
     this.icon,
+    this.borderRadius = 50,
   });
 
   @override
@@ -39,15 +41,16 @@ class ButtonWidget extends StatelessWidget {
           border:
               (isBlocked ?? false)
                   ? Border.all(width: 1, color: MyColors.instance.gray4B4A4E)
+                  : (isBorder ?? false)
+                  ? Border.all(width: 1, color: MyColors.instance.black171717)
                   : Border.all(width: 1, color: MyColors.instance.yellowCF9201),
           color:
               (isBlocked ?? false)
                   ? MyColors.instance.gray4B4A4E
+                  : (isBorder ?? false)
+                  ? Colors.transparent
                   : MyColors.instance.yellowCF9201,
-          borderRadius:
-              (icon != null)
-                  ? BorderRadius.circular(8)
-                  : BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(borderRadius!),
         ),
         child: Center(
           child:
@@ -56,11 +59,21 @@ class ButtonWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(icon, size: 18, color: MyColors.instance.white),
+                      Icon(
+                        icon,
+                        size: 18,
+                        color:
+                            (isBorder ?? false)
+                                ? MyColors.instance.black171717
+                                : MyColors.instance.white,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         text ?? '',
-                        style: MyStyles.instance.white14W700OpenSans,
+                        style:
+                            (isBorder ?? false)
+                                ? MyStyles.instance.black17171714W500OpenSans
+                                : MyStyles.instance.white14W700OpenSans,
                       ),
                     ],
                   )

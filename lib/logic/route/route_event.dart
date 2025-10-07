@@ -8,6 +8,8 @@ class SplashStarted extends RouteEvent {}
 
 class GoToDetailProduct extends RouteEvent {}
 
+class GoToCustomOrder extends RouteEvent {}
+
 /*class GoToDetailEvent extends AppEvent {
   final int itemId;
   GoToDetailEvent(this.itemId);

@@ -129,6 +129,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 35,
                                   icon: Icons.local_grocery_store_outlined,
                                   text: "Agregar",
+                                  borderRadius: 8,
                                 ),
                               ],
                             ),

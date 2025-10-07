@@ -13,4 +13,5 @@ class MyColors {
   final Color background = Color(0xfff9f9f7);
   final Color bgBottomNavigationBar = Color(0xfffbfafb);
   final Color black = Color(0xff000000);
+  final Color black171717 = Color(0xff171717);
 }

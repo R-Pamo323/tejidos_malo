@@ -27,6 +27,15 @@ class _CustomOrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Color> colorsPalette = [
+      MyColors.instance.yellowFDF1E6,
+      MyColors.instance.greenD6EADD,
+      MyColors.instance.redF0D8D8,
+      MyColors.instance.blueD9ECF5,
+      MyColors.instance.purpleE7DCF2,
+      MyColors.instance.brownE1BBA4,
+    ];
+
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -188,89 +197,32 @@ class _CustomOrderView extends StatelessWidget {
                   style: MyStyles.instance.black17171716W500OpenSans,
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.yellowFDF1E6,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
+                SizedBox(
+                  height: 45,
+                  child: ListView.builder(
+                    itemCount: colorsPalette.length,
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      //final isSelected = state.selectedIndex == index;
+                      return Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          color: colorsPalette[index],
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: MyColors.instance.gray727272,
+                            width: 1.5,
+                          ),
                         ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.redF0D8D8,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.greenD6EADD,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.blueD9ECF5,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.purpleE7DCF2,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.instance.brownE1BBA4,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: MyColors.instance.gray727272,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
-                const SizedBox(height: 15),
+
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -324,7 +276,7 @@ class _CustomOrderView extends StatelessWidget {
                     ),
                     hintText:
                         "Describe any specific design elements, patterns, or inspirations you have in mind.",
-                    hintStyle: MyStyles.instance.gray16W500OpenSans,
+                    hintStyle: MyStyles.instance.gray14W400OpenSans,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -342,7 +294,7 @@ class _CustomOrderView extends StatelessWidget {
                   "Upload Image",
                   style: MyStyles.instance.black17171716W500OpenSans,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 BlocListener<ImagePickerBloc, ImagePickerState>(
                   listener: (context, state) {
                     if (state is ImagePickerSuccess) {

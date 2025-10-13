@@ -79,10 +79,10 @@ class DottedBorderContainer extends StatelessWidget {
       width: double.infinity,
       height: 150,
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: MyColors.instance.background,
         border: Border.all(
-          color: Colors.grey,
-          style: BorderStyle.none,
+          color: MyColors.instance.grayE3E4E8,
+          style: BorderStyle.solid,
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(12),

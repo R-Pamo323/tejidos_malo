@@ -11,6 +11,7 @@ class ButtonWidget extends StatelessWidget {
   final bool? isBorder;
   final double? borderRadius;
   final IconData? icon;
+  final double? paddingHorizontal;
   final void Function() onTap;
 
   const ButtonWidget({
@@ -24,6 +25,7 @@ class ButtonWidget extends StatelessWidget {
     this.isBorder,
     this.icon,
     this.borderRadius = 50,
+    this.paddingHorizontal = 20,
   });
 
   @override
@@ -31,7 +33,7 @@ class ButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: (isBlocked ?? false) ? () {} : onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: paddingHorizontal!),
         height: height,
         width:
             (isFill ?? false)
@@ -82,6 +84,8 @@ class ButtonWidget extends StatelessWidget {
                     style:
                         (isBlocked ?? false)
                             ? MyStyles.instance.gray16W500OpenSans
+                            : (isBorder ?? false)
+                            ? MyStyles.instance.black17171716W500OpenSans
                             : MyStyles.instance.white16W500Outfit,
                   ),
         ),

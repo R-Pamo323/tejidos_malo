@@ -39,6 +39,10 @@ dependencies:
   animate_do: ^4.2.0
   #Carousel Slider https://pub.dev/packages/carousel_slider
   carousel_slider: ^5.1.1
+  #Image Picker https://pub.dev/packages/image_picker
+  image_picker: ^1.2.0
+  #Equatable https://pub.dev/packages/equatable
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:

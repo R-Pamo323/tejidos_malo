@@ -14,4 +14,10 @@ class MyColors {
   final Color bgBottomNavigationBar = Color(0xfffbfafb);
   final Color black = Color(0xff000000);
   final Color black171717 = Color(0xff171717);
+  final Color yellowFDF1E6 = Color(0xfffdf1e6);
+  final Color redF0D8D8 = Color(0xfff0d8d8);
+  final Color greenD6EADD = Color(0xffd6eadd);
+  final Color blueD9ECF5 = Color(0xffd9ecf5);
+  final Color purpleE7DCF2 = Color(0xffe7dcf2);
+  final Color brownE1BBA4 = Color(0xffe1bba4);
 }

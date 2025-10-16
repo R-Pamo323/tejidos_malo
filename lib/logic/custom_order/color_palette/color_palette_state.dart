@@ -1,18 +1,35 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 
-abstract class ColorPaletteState extends Equatable {
-  const ColorPaletteState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class ColorPaletteInitial extends ColorPaletteState {}
-
-class ColorPaletteSuccess extends ColorPaletteState {
+class ColorPaletteState extends Equatable {
   final int selectedIndex;
-  const ColorPaletteSuccess({required this.selectedIndex});
+  final Color? customColor;
+  final bool isCustomColorSelected;
+
+  const ColorPaletteState({
+    required this.selectedIndex,
+    this.customColor,
+    this.isCustomColorSelected = false,
+  });
+
+  ColorPaletteState copyWith({
+    int? selectedIndex,
+    Color? customColor,
+    bool? isCustomColorSelected,
+  }) {
+    return ColorPaletteState(
+      selectedIndex: selectedIndex ?? this.selectedIndex,
+      customColor: customColor ?? this.customColor,
+      isCustomColorSelected:
+          isCustomColorSelected ?? this.isCustomColorSelected,
+    );
+  }
 
   @override
-  List<Object?> get props => [selectedIndex];
+  List<Object?> get props => [
+    selectedIndex,
+    customColor,
+    isCustomColorSelected,
+  ];
 }

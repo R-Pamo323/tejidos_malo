@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:tejidosmalo/core/exports.dart';
 import 'package:tejidosmalo/core/widgets/button_widget.dart';
+import 'package:tejidosmalo/logic/custom_order/color_palette/color_palette_bloc.dart';
+import 'package:tejidosmalo/logic/custom_order/color_palette/color_palette_event.dart';
+import 'package:tejidosmalo/logic/custom_order/color_palette/color_palette_state.dart';
 import 'package:tejidosmalo/logic/custom_order/image_picker/image_picker_bloc.dart';
 import 'package:tejidosmalo/logic/custom_order/image_picker/image_picker_state.dart';
-import 'package:tejidosmalo/logic/detail_product/color/color_bloc.dart';
+import 'package:tejidosmalo/logic/custom_order/selected_checkbox/selected_checbox_bloc.dart';
+import 'package:tejidosmalo/logic/custom_order/selected_checkbox/selected_checkbox_event.dart';
+import 'package:tejidosmalo/logic/custom_order/selected_checkbox/selected_checkbox_state.dart';
+
 import 'package:tejidosmalo/presentation/custom_order/widgets/image_upload.dart';
 
 class CustomOrderScreen extends StatelessWidget {
@@ -14,8 +21,9 @@ class CustomOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ColorBloc()),
+        BlocProvider(create: (_) => ColorPaletteBloc()),
         BlocProvider(create: (_) => ImagePickerBloc()),
+        BlocProvider(create: (_) => SelectedCheckboxBloc()),
       ],
       child: const _CustomOrderView(),
     );
@@ -35,6 +43,15 @@ class _CustomOrderView extends StatelessWidget {
       MyColors.instance.purpleE7DCF2,
       MyColors.instance.brownE1BBA4,
     ];
+
+    final state = context.watch<ColorPaletteBloc>().state;
+    final selectedColor =
+        state.isCustomColorSelected
+            ? state.customColor
+            : (state.selectedIndex >= 0 &&
+                    state.selectedIndex < colorsPalette.length
+                ? colorsPalette[state.selectedIndex]
+                : MyColors.instance.white);
 
     return SafeArea(
       top: false,
@@ -197,47 +214,117 @@ class _CustomOrderView extends StatelessWidget {
                   style: MyStyles.instance.black17171716W500OpenSans,
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: 45,
-                  child: ListView.builder(
-                    itemCount: colorsPalette.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      //final isSelected = state.selectedIndex == index;
-                      return Container(
-                        height: 40,
-                        width: 40,
-                        margin: EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          color: colorsPalette[index],
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: MyColors.instance.gray727272,
-                            width: 1.5,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                BlocBuilder<ColorPaletteBloc, ColorPaletteState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                      height: 45,
+                      child: ListView.builder(
+                        itemCount: colorsPalette.length,
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final isSelected = state.selectedIndex == index;
+                          return InkWell(
+                            onTap: () {
+                              context.read<ColorPaletteBloc>().add(
+                                ColorPaletteSelected(index),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(50),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOut,
+                              margin: const EdgeInsets.only(right: 15),
+                              height: isSelected ? 55 : 45,
+                              width: isSelected ? 55 : 45,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    isSelected
+                                        ? Border.all(
+                                          color: MyColors.instance.black,
+                                          width: 3,
+                                        )
+                                        : null,
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  color: colorsPalette[index],
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: MyColors.instance.gray727272,
+                                    width: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Checkbox(
-                      value: false,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onChanged: (bool? newValue) {},
-                    ),
-                    Text(
-                      'Escoge un color personalizado',
-                      style: MyStyles.instance.black17171714W500OpenSans,
-                    ),
-                  ],
+                BlocBuilder<SelectedCheckboxBloc, SelectedCheckboxState>(
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Checkbox(
+                              activeColor: MyColors.instance.yellowCF9201,
+                              value: state.checkSelected,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              onChanged: (bool? newValue) {
+                                context.read<SelectedCheckboxBloc>().add(
+                                  CheckboxSelected(!state.checkSelected),
+                                );
+                              },
+                            ),
+                            Text(
+                              'Escoge un color personalizado',
+                              style:
+                                  MyStyles.instance.black17171714W500OpenSans,
+                            ),
+                          ],
+                        ),
+                        Visibility(
+                          visible: state.checkSelected == true,
+                          child: AlertDialog(
+                            title: const Text('Pick a color!'),
+                            content: SingleChildScrollView(
+                              child: ColorPicker(
+                                paletteType: PaletteType.hueWheel,
+                                pickerColor: Colors.yellow,
+                                onColorChanged: (color) {
+                                  context.read<ColorPaletteBloc>().add(
+                                    CustomColorSelected(color),
+                                  );
+                                },
+                              ),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: const Text('Got it'),
+                                onPressed: () {
+                                  //setState(() => currentColor = pickerColor);
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
+
                 const SizedBox(height: 15),
                 Text(
                   "Preferencias de estilo y diseño",
